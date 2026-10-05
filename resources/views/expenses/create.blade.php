@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -6,8 +7,11 @@
 
     <div class="row justify-content-center">
 
-        <div class="col-lg-7">
+        <div class="col-lg-7 col-xl-6">
 
+            {{-- =================================================
+                 Page Header
+                 ================================================= --}}
             <x-ui.page-header
                 title="Add Expense"
                 description="Record a new expense to keep your finances organized."
@@ -15,23 +19,59 @@
                 back-text="Back to Expenses"
             />
 
+
+            {{-- =================================================
+                 Expense Card
+                 ================================================= --}}
             <x-ui.card>
 
-                <div class="mb-4">
-                    <h5 class="fw-bold mb-1">
-                        Expense Details
-                    </h5>
+                {{-- Card Header --}}
+                <div
+                    class="d-flex align-items-center gap-3 mb-4 pb-3"
+                    style="border-bottom: 1px solid #f0f1f3;"
+                >
 
-                    <p class="text-muted small mb-0">
-                        Enter the details of your expense.
-                    </p>
+                    <div
+                        class="d-flex align-items-center justify-content-center rounded-3"
+                        style="
+                            width: 44px;
+                            height: 44px;
+                            background: #eef2ff;
+                            color: #6366f1;
+                            font-size: 20px;
+                            font-weight: 700;
+                        "
+                    >
+                        ₹
+                    </div>
+
+                    <div>
+
+                        <h5 class="fw-bold mb-1">
+                            Expense Details
+                        </h5>
+
+                        <p class="text-muted small mb-0">
+                            Enter the details of your expense.
+                        </p>
+
+                    </div>
+
                 </div>
 
-                <form method="POST"
-                      action="{{ route('expenses.store') }}">
+
+                {{-- =================================================
+                     Form
+                     ================================================= --}}
+                <form
+                    method="POST"
+                    action="{{ route('expenses.store') }}"
+                >
 
                     @csrf
 
+
+                    {{-- Expense Title --}}
                     <x-form.input
                         name="title"
                         label="Expense Title"
@@ -39,7 +79,9 @@
                         required
                     />
 
-                    <div class="row">
+
+                    {{-- Amount + Category --}}
+                    <div class="row g-3">
 
                         <div class="col-md-6">
 
@@ -51,6 +93,7 @@
                             />
 
                         </div>
+
 
                         <div class="col-md-6">
 
@@ -75,6 +118,8 @@
 
                     </div>
 
+
+                    {{-- Date --}}
                     <x-form.date
                         name="expense_date"
                         label="Date"
@@ -82,6 +127,8 @@
                         required
                     />
 
+
+                    {{-- Note --}}
                     <x-form.textarea
                         name="note"
                         label="Note"
@@ -89,10 +136,19 @@
                         :rows="4"
                     />
 
-                    <x-form.actions
-                        :cancel-url="route('expenses.index')"
-                        submit-text="Save Expense"
-                    />
+
+                    {{-- Actions --}}
+                    <div
+                        class="pt-2 mt-4"
+                        style="border-top: 1px solid #f0f1f3;"
+                    >
+
+                        <x-form.actions
+                            :cancel-url="route('expenses.index')"
+                            submit-text="Save Expense"
+                        />
+
+                    </div>
 
                 </form>
 
@@ -105,3 +161,4 @@
 </div>
 
 @endsection
+
