@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ReportsController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -30,7 +31,11 @@ Route::middleware('auth')->group(function () {
         ->name('dashboard');
 
     Route::resource('expenses', ExpenseController::class)
-    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);   
+    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);  
+    
+ 
+    Route::get('/reports', [ReportsController::class, 'index'])
+        ->name('reports.index');
 
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');

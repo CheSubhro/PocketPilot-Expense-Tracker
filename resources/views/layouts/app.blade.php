@@ -91,6 +91,15 @@
                     </a>
 
 
+                <a
+                    href="{{ route('reports.index') }}"
+                    class="nav-link pp-nav-link"
+                >
+                    Reports
+                </a>
+
+
+
                     
 
 
