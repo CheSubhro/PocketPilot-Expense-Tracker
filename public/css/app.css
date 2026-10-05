@@ -1,0 +1,699 @@
+
+/* =========================================================
+   PocketPilot - Global UI
+   ========================================================= */
+
+:root {
+    --pp-primary: #6366f1;
+    --pp-primary-dark: #4f46e5;
+    --pp-bg: #f8f9fc;
+    --pp-text: #1f2937;
+    --pp-muted: #6b7280;
+    --pp-border: #e5e7eb;
+}
+
+
+/* =========================================================
+   Base
+   ========================================================= */
+
+body {
+    background: var(--pp-bg);
+    color: var(--pp-text);
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+    font-size: 15px;
+}
+
+a {
+    transition: all 0.2s ease;
+}
+
+
+/* =========================================================
+   Navbar
+   ========================================================= */
+
+.pp-navbar {
+    background: #111827 !important;
+    min-height: 68px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.pp-navbar .container {
+    min-height: 68px;
+}
+
+
+/* Brand */
+
+.pp-navbar .navbar-brand {
+    color: #ffffff;
+    font-size: 1.05rem;
+    letter-spacing: -0.2px;
+}
+
+.pp-brand-icon {
+    width: 34px;
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--pp-primary);
+    color: #ffffff;
+
+    border-radius: 10px;
+
+    font-weight: 700;
+    font-size: 1rem;
+
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+
+/* Navigation */
+
+.pp-nav-link {
+    color: #cbd5e1 !important;
+
+    padding: 8px 13px !important;
+
+    border-radius: 8px;
+
+    font-weight: 500;
+}
+
+.pp-nav-link:hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.pp-nav-link.active {
+    color: #ffffff !important;
+    background: rgba(99, 102, 241, 0.18);
+}
+
+
+/* Add Expense */
+
+.pp-add-btn {
+    background: var(--pp-primary);
+    border-color: var(--pp-primary);
+
+    font-weight: 600;
+
+    padding: 8px 15px;
+
+    border-radius: 9px;
+}
+
+.pp-add-btn:hover,
+.pp-add-btn:focus {
+    background: var(--pp-primary-dark);
+    border-color: var(--pp-primary-dark);
+}
+
+
+/* User button */
+
+.pp-user-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #ffffff !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius: 9px;
+
+    padding: 6px 10px;
+
+    font-weight: 500;
+}
+
+.pp-user-btn:hover,
+.pp-user-btn:focus {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+
+/* Avatar */
+
+.pp-avatar {
+    width: 30px;
+    height: 30px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef2ff;
+    color: var(--pp-primary);
+
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+
+/* Dropdown */
+
+.pp-dropdown {
+    min-width: 230px;
+
+    border: 0;
+    border-radius: 12px;
+
+    padding: 8px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.pp-dropdown .dropdown-item,
+.pp-dropdown .dropdown-item-text {
+    border-radius: 8px;
+}
+
+.pp-dropdown .dropdown-item:hover {
+    background: #f3f4f6;
+}
+
+
+/* =========================================================
+   Page
+   ========================================================= */
+
+.pp-page {
+    min-height: calc(100vh - 68px);
+}
+
+
+/* =========================================================
+   Alerts
+   ========================================================= */
+
+.pp-alert {
+    border: 0;
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+
+/* =========================================================
+   Cards
+   ========================================================= */
+
+.card {
+    border-radius: 14px !important;
+}
+
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+
+.btn {
+    border-radius: 9px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: var(--pp-primary);
+    border-color: var(--pp-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: var(--pp-primary-dark);
+    border-color: var(--pp-primary-dark);
+}
+
+
+/* =========================================================
+   Form Controls
+   ========================================================= */
+
+.form-control,
+.form-select {
+    border-color: var(--pp-border);
+    border-radius: 9px;
+
+    padding: 10px 12px;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--pp-primary);
+
+    box-shadow:
+        0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.input-group-text {
+    background: #f8fafc;
+    border-color: var(--pp-border);
+}
+
+
+/* =========================================================
+   Tables
+   ========================================================= */
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    color: #6b7280;
+
+    font-size: 0.78rem;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.04em;
+
+    border-bottom: 1px solid var(--pp-border);
+}
+
+.table tbody td {
+    vertical-align: middle;
+    border-color: #f1f3f5;
+}
+
+.table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.table tbody tr:hover {
+    background: #fafafa;
+}
+
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .pp-navbar {
+        min-height: 64px;
+    }
+
+    .pp-navbar .container {
+        min-height: 64px;
+    }
+
+    .navbar-collapse {
+        padding: 14px 0 8px;
+    }
+
+    .pp-nav-link {
+        margin-bottom: 4px;
+    }
+
+    .pp-add-btn {
+        display: inline-block;
+        margin-top: 8px;
+    }
+
+    .pp-user-btn {
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 8px;
+    }
+
+}
+
+
+@media (max-width: 575.98px) {
+
+    .pp-page .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .pp-brand-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+}
+
+
+/* =========================================================
+   PocketPilot Dashboard
+   ========================================================= */
+
+
+/* Dashboard status */
+
+.pp-status-dot {
+    width: 7px;
+    height: 7px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.10);
+}
+
+
+/* Primary dashboard button */
+
+.pp-primary-btn {
+    min-height: 42px;
+
+    padding-left: 18px;
+    padding-right: 18px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 4px 12px rgba(99, 102, 241, 0.18);
+}
+
+.pp-primary-btn:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 16px rgba(99, 102, 241, 0.24);
+}
+
+
+/* =========================================================
+   Stat Cards
+   ========================================================= */
+
+.pp-stat-card {
+    border-radius: 15px !important;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.pp-stat-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.07) !important;
+}
+
+.pp-stat-value {
+    font-size: 1.45rem;
+
+    letter-spacing: -0.4px;
+
+    color: #111827;
+}
+
+.pp-stat-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.pp-icon-purple {
+    background: #eef2ff;
+    color: #6366f1;
+}
+
+.pp-icon-blue {
+    background: #eff6ff;
+    color: #3b82f6;
+}
+
+.pp-icon-green {
+    background: #ecfdf5;
+    color: #10b981;
+}
+
+.pp-icon-orange {
+    background: #fff7ed;
+    color: #f97316;
+}
+
+
+/* =========================================================
+   Dashboard Cards
+   ========================================================= */
+
+.pp-dashboard-card {
+    border-radius: 15px !important;
+
+    overflow: hidden;
+}
+
+.pp-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.pp-card-icon {
+    width: 34px;
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: #f5f3ff;
+
+    color: #6366f1;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   Charts
+   ========================================================= */
+
+.pp-chart-container {
+    position: relative;
+
+    width: 100%;
+}
+
+.pp-doughnut-container {
+    height: 295px;
+}
+
+.pp-monthly-container {
+    height: 295px;
+}
+
+.pp-empty-chart {
+    min-height: 295px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.pp-empty-icon {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: #f5f3ff;
+
+    font-size: 28px;
+}
+
+
+/* =========================================================
+   Recent Expenses
+   ========================================================= */
+
+.pp-dashboard-table thead th {
+    background: #fafafa;
+
+    padding-top: 13px;
+    padding-bottom: 13px;
+
+    font-size: 0.72rem;
+
+    border-bottom: 1px solid #eef0f2;
+}
+
+.pp-dashboard-table tbody td {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.pp-dashboard-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.pp-expense-avatar {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #eef2ff;
+
+    color: #6366f1;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.pp-note {
+    max-width: 240px;
+}
+
+.pp-category-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 7px;
+
+    background: #f3f4f6;
+
+    color: #4b5563;
+
+    font-size: 0.75rem;
+
+    font-weight: 600;
+}
+
+.pp-expense-amount {
+    color: #111827;
+
+    white-space: nowrap;
+}
+
+.pp-view-btn {
+    border-radius: 8px;
+}
+
+
+/* =========================================================
+   Empty State
+   ========================================================= */
+
+.pp-empty-state {
+    padding: 55px 20px;
+
+    text-align: center;
+}
+
+.pp-empty-state-icon {
+    width: 68px;
+    height: 68px;
+
+    margin: 0 auto 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background: #f5f3ff;
+
+    font-size: 30px;
+}
+
+
+/* =========================================================
+   Mobile Dashboard
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .pp-stat-value {
+        font-size: 1.3rem;
+    }
+
+    .pp-doughnut-container,
+    .pp-monthly-container {
+        height: 260px;
+    }
+
+    .pp-dashboard-table {
+        min-width: 650px;
+    }
+
+}
+
+@media (max-width: 575.98px) {
+
+    .pp-stat-card .card-body {
+        padding: 18px !important;
+    }
+
+    .pp-dashboard-card .card-body {
+        padding: 18px !important;
+    }
+
+    .pp-section-header {
+        gap: 12px;
+    }
+
+    .pp-stat-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+}
+
+

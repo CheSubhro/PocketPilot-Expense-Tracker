@@ -91,13 +91,7 @@
                     </a>
 
 
-                    {{-- Add Expense --}}
-                    <a
-                        href="{{ route('expenses.create') }}"
-                        class="btn btn-primary pp-add-btn ms-lg-2"
-                    >
-                        + Add Expense
-                    </a>
+                    
 
 
                     {{-- User --}}

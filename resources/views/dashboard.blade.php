@@ -1,157 +1,243 @@
+
 @extends('layouts.app')
 
 @section('content')
 
-<div class="container py-4">
+<div class="container py-3 py-md-4">
 
-    {{-- Header --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    {{-- =========================================================
+         Dashboard Header
+         ========================================================= --}}
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
 
         <div>
-            <h3 class="fw-bold mb-1">
-                Dashboard
-            </h3>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <h3 class="fw-bold mb-0">
+                    Dashboard
+                </h3>
+
+                <span class="pp-status-dot"></span>
+            </div>
 
             <p class="text-muted mb-0">
                 Here's your expense overview.
             </p>
         </div>
 
-        <a href="{{ route('expenses.create') }}"
-           class="btn btn-primary px-4">
-            + Add Expense
-        </a>
 
     </div>
 
 
-    {{-- Summary Cards --}}
-    <div class="row g-4 mb-4">
+    {{-- =========================================================
+         Summary Cards
+         ========================================================= --}}
+    <div class="row g-3 g-lg-4 mb-4">
 
-        <div class="col-md-6 col-xl-3">
+        {{-- Total Expense --}}
+        <div class="col-12 col-sm-6 col-xl-3">
 
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <p class="text-muted mb-2">
-                        Total Expense
-                    </p>
-
-                    <h3 class="fw-bold mb-0">
-                        ₹{{ number_format($totalExpense, 2) }}
-                    </h3>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="col-md-6 col-xl-3">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <p class="text-muted mb-2">
-                        This Month
-                    </p>
-
-                    <h3 class="fw-bold mb-0">
-                        ₹{{ number_format($thisMonthExpense, 2) }}
-                    </h3>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="col-md-6 col-xl-3">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <p class="text-muted mb-2">
-                        Today
-                    </p>
-
-                    <h3 class="fw-bold mb-0">
-                        ₹{{ number_format($todayExpense, 2) }}
-                    </h3>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="col-md-6 col-xl-3">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <p class="text-muted mb-2">
-                        Expense Count
-                    </p>
-
-                    <h3 class="fw-bold mb-0">
-                        {{ $expenseCount }}
-                    </h3>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    {{-- Charts --}}
-    <div class="row g-4 mb-4">
-
-        {{-- Category Chart --}}
-        <div class="col-lg-6">
-
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm h-100 pp-stat-card">
 
                 <div class="card-body p-4">
 
-                    <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-start">
 
-                        <h5 class="fw-bold mb-1">
-                            Expense by Category
-                        </h5>
+                        <div>
+                            <p class="text-muted small fw-medium mb-2">
+                                Total Expense
+                            </p>
 
-                        <p class="text-muted small mb-0">
-                            See where your money is going.
-                        </p>
+                            <h3 class="fw-bold mb-0 pp-stat-value">
+                                ₹{{ number_format($totalExpense, 2) }}
+                            </h3>
+                        </div>
+
+                        <div class="pp-stat-icon pp-icon-purple">
+                            ₹
+                        </div>
 
                     </div>
 
+                    <div class="mt-3">
+                        <span class="small text-muted">
+                            All recorded expenses
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {{-- This Month --}}
+        <div class="col-12 col-sm-6 col-xl-3">
+
+            <div class="card border-0 shadow-sm h-100 pp-stat-card">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+                            <p class="text-muted small fw-medium mb-2">
+                                This Month
+                            </p>
+
+                            <h3 class="fw-bold mb-0 pp-stat-value">
+                                ₹{{ number_format($thisMonthExpense, 2) }}
+                            </h3>
+                        </div>
+
+                        <div class="pp-stat-icon pp-icon-blue">
+                            M
+                        </div>
+
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="small text-muted">
+                            Current month spending
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {{-- Today --}}
+        <div class="col-12 col-sm-6 col-xl-3">
+
+            <div class="card border-0 shadow-sm h-100 pp-stat-card">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+                            <p class="text-muted small fw-medium mb-2">
+                                Today
+                            </p>
+
+                            <h3 class="fw-bold mb-0 pp-stat-value">
+                                ₹{{ number_format($todayExpense, 2) }}
+                            </h3>
+                        </div>
+
+                        <div class="pp-stat-icon pp-icon-green">
+                            T
+                        </div>
+
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="small text-muted">
+                            Today's spending
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {{-- Expense Count --}}
+        <div class="col-12 col-sm-6 col-xl-3">
+
+            <div class="card border-0 shadow-sm h-100 pp-stat-card">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+                            <p class="text-muted small fw-medium mb-2">
+                                Expense Count
+                            </p>
+
+                            <h3 class="fw-bold mb-0 pp-stat-value">
+                                {{ $expenseCount }}
+                            </h3>
+                        </div>
+
+                        <div class="pp-stat-icon pp-icon-orange">
+                            #
+                        </div>
+
+                    </div>
+
+                    <div class="mt-3">
+                        <span class="small text-muted">
+                            Total transactions
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{-- =========================================================
+         Charts
+         ========================================================= --}}
+    <div class="row g-3 g-lg-4 mb-4">
+
+        {{-- Category Chart --}}
+        <div class="col-lg-5">
+
+            <div class="card border-0 shadow-sm h-100 pp-dashboard-card">
+
+                <div class="card-body p-4">
+
+                    <div class="pp-section-header mb-4">
+
+                        <div>
+                            <h5 class="fw-bold mb-1">
+                                Expense by Category
+                            </h5>
+
+                            <p class="text-muted small mb-0">
+                                See where your money is going.
+                            </p>
+                        </div>
+
+                        <span class="pp-card-icon">
+                            %
+                        </span>
+
+                    </div>
+
+
                     @if($categorySummary->count())
 
-                        <div style="height: 300px;">
+                        <div class="pp-chart-container pp-doughnut-container">
                             <canvas id="categoryChart"></canvas>
                         </div>
 
                     @else
 
-                        <div class="text-center py-5">
+                        <div class="pp-empty-chart">
 
-                            <div style="font-size: 40px;">
+                            <div class="pp-empty-icon">
                                 📊
                             </div>
 
-                            <p class="text-muted mb-0 mt-2">
-                                No category data available yet.
+                            <h6 class="fw-semibold mt-3 mb-1">
+                                No category data
+                            </h6>
+
+                            <p class="text-muted small mb-0">
+                                Add an expense to see your spending breakdown.
                             </p>
 
                         </div>
@@ -166,25 +252,32 @@
 
 
         {{-- Monthly Chart --}}
-        <div class="col-lg-6">
+        <div class="col-lg-7">
 
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm h-100 pp-dashboard-card">
 
                 <div class="card-body p-4">
 
-                    <div class="mb-4">
+                    <div class="pp-section-header mb-4">
 
-                        <h5 class="fw-bold mb-1">
-                            Monthly Expenses
-                        </h5>
+                        <div>
+                            <h5 class="fw-bold mb-1">
+                                Monthly Expenses
+                            </h5>
 
-                        <p class="text-muted small mb-0">
-                            Your expense trend over the last 6 months.
-                        </p>
+                            <p class="text-muted small mb-0">
+                                Your expense trend over the last 6 months.
+                            </p>
+                        </div>
+
+                        <span class="pp-card-icon">
+                            ↗
+                        </span>
 
                     </div>
 
-                    <div style="height: 300px;">
+
+                    <div class="pp-chart-container pp-monthly-container">
                         <canvas id="monthlyChart"></canvas>
                     </div>
 
@@ -197,29 +290,39 @@
     </div>
 
 
-    {{-- Recent Expenses --}}
-    <div class="card border-0 shadow-sm">
+    {{-- =========================================================
+         Recent Expenses
+         ========================================================= --}}
+    <div class="card border-0 shadow-sm pp-dashboard-card">
 
-        <div class="card-body">
+        <div class="card-body p-0">
 
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            {{-- Section Header --}}
+            <div class="p-4 border-bottom">
 
-                <div>
+                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
 
-                    <h5 class="fw-bold mb-1">
-                        Recent Expenses
-                    </h5>
+                    <div>
 
-                    <p class="text-muted small mb-0">
-                        Your latest transactions
-                    </p>
+                        <h5 class="fw-bold mb-1">
+                            Recent Expenses
+                        </h5>
+
+                        <p class="text-muted small mb-0">
+                            Your latest transactions.
+                        </p>
+
+                    </div>
+
+                    <a
+                        href="{{ route('expenses.index') }}"
+                        class="btn btn-outline-secondary btn-sm pp-view-btn"
+                    >
+                        View All
+                        <span class="ms-1">→</span>
+                    </a>
 
                 </div>
-
-                <a href="{{ route('expenses.index') }}"
-                   class="btn btn-outline-secondary btn-sm">
-                    View All
-                </a>
 
             </div>
 
@@ -228,18 +331,32 @@
 
                 <div class="table-responsive">
 
-                    <table class="table align-middle mb-0">
+                    <table class="table pp-dashboard-table align-middle mb-0">
 
                         <thead>
 
                             <tr>
-                                <th>Expense</th>
-                                <th>Category</th>
-                                <th>Date</th>
-                                <th class="text-end">Amount</th>
+
+                                <th class="ps-4">
+                                    Expense
+                                </th>
+
+                                <th>
+                                    Category
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th class="text-end pe-4">
+                                    Amount
+                                </th>
+
                             </tr>
 
                         </thead>
+
 
                         <tbody>
 
@@ -247,41 +364,64 @@
 
                             <tr>
 
-                                <td>
+                                {{-- Expense --}}
+                                <td class="ps-4">
 
-                                    <div class="fw-semibold">
-                                        {{ $expense->title }}
+                                    <div class="d-flex align-items-center gap-3">
+
+                                        <div class="pp-expense-avatar">
+                                            {{ strtoupper(substr($expense->title, 0, 1)) }}
+                                        </div>
+
+                                        <div>
+
+                                            <div class="fw-semibold">
+                                                {{ $expense->title }}
+                                            </div>
+
+                                            @if($expense->note)
+
+                                                <small class="text-muted d-block text-truncate pp-note">
+                                                    {{ $expense->note }}
+                                                </small>
+
+                                            @endif
+
+                                        </div>
+
                                     </div>
-
-                                    @if($expense->note)
-
-                                        <small class="text-muted">
-                                            {{ $expense->note }}
-                                        </small>
-
-                                    @endif
 
                                 </td>
 
+
+                                {{-- Category --}}
                                 <td>
 
-                                    <span class="badge bg-light text-dark">
+                                    <span class="pp-category-badge">
                                         {{ $expense->category }}
                                     </span>
 
                                 </td>
 
+
+                                {{-- Date --}}
                                 <td>
 
-                                    {{ $expense->expense_date
-                                        ? $expense->expense_date->format('d M Y')
-                                        : '-' }}
+                                    <span class="text-muted small">
+                                        {{ $expense->expense_date
+                                            ? $expense->expense_date->format('d M Y')
+                                            : '-' }}
+                                    </span>
 
                                 </td>
 
-                                <td class="text-end fw-semibold">
 
-                                    ₹{{ number_format($expense->amount, 2) }}
+                                {{-- Amount --}}
+                                <td class="text-end pe-4">
+
+                                    <span class="fw-bold pp-expense-amount">
+                                        ₹{{ number_format($expense->amount, 2) }}
+                                    </span>
 
                                 </td>
 
@@ -297,22 +437,24 @@
 
             @else
 
-                <div class="text-center py-5">
+                <div class="pp-empty-state">
 
-                    <div class="mb-3" style="font-size: 40px;">
+                    <div class="pp-empty-state-icon">
                         💸
                     </div>
 
-                    <h6 class="fw-bold">
+                    <h6 class="fw-bold mb-1">
                         No expenses yet
                     </h6>
 
-                    <p class="text-muted mb-3">
+                    <p class="text-muted small mb-3">
                         Start tracking your expenses today.
                     </p>
 
-                    <a href="{{ route('expenses.create') }}"
-                       class="btn btn-primary">
+                    <a
+                        href="{{ route('expenses.create') }}"
+                        class="btn btn-primary pp-primary-btn"
+                    >
                         Add Your First Expense
                     </a>
 
@@ -327,7 +469,10 @@
 </div>
 
 
-{{-- Chart.js --}}
+
+{{-- =========================================================
+     Chart.js
+     ========================================================= --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -338,12 +483,27 @@
     |--------------------------------------------------------------------------
     */
 
-    const categoryLabels = @json($categorySummary->keys()->values());
+    const categoryLabels = @json(
+        $categorySummary->keys()->values()
+    );
 
-    const categoryData = @json($categorySummary->values()->values());
+    const categoryData = @json(
+        $categorySummary->values()->values()
+    );
 
 
     if (categoryLabels.length > 0) {
+
+        const categoryColors = [
+            '#6366f1', // Purple
+            '#3b82f6', // Blue
+            '#10b981', // Green
+            '#f59e0b', // Amber
+            '#ef4444', // Red
+            '#8b5cf6', // Violet
+            '#06b6d4', // Cyan
+            '#f97316'  // Orange
+        ];
 
         new Chart(
             document.getElementById('categoryChart'),
@@ -351,13 +511,28 @@
                 type: 'doughnut',
 
                 data: {
+
                     labels: categoryLabels,
 
                     datasets: [
                         {
-                            data: categoryData
+                            data: categoryData,
+
+                            backgroundColor: categoryLabels.map(
+                                (_, index) =>
+                                    categoryColors[
+                                        index % categoryColors.length
+                                    ]
+                            ),
+
+                            borderColor: '#ffffff',
+
+                            borderWidth: 3,
+
+                            hoverOffset: 8
                         }
                     ]
+
                 },
 
                 options: {
@@ -366,13 +541,44 @@
 
                     maintainAspectRatio: false,
 
+                    cutout: '68%',
+
+                    animation: {
+                        duration: 700
+                    },
+
                     plugins: {
 
                         legend: {
-                            position: 'bottom'
+
+                            position: 'bottom',
+
+                            labels: {
+
+                                usePointStyle: true,
+
+                                pointStyle: 'circle',
+
+                                padding: 16,
+
+                                boxWidth: 9,
+
+                                boxHeight: 9,
+
+                                color: '#4b5563',
+
+                                font: {
+                                    size: 12,
+                                    weight: '500'
+                                }
+
+                            }
+
                         },
 
                         tooltip: {
+
+                            displayColors: true,
 
                             callbacks: {
 
@@ -418,6 +624,7 @@
     new Chart(
         document.getElementById('monthlyChart'),
         {
+
             type: 'bar',
 
             data: {
@@ -428,7 +635,21 @@
                     {
                         label: 'Expenses',
 
-                        data: monthlyData
+                        data: monthlyData,
+
+                        backgroundColor: '#6366f1',
+
+                        hoverBackgroundColor: '#4f46e5',
+
+                        borderColor: '#6366f1',
+
+                        borderWidth: 1,
+
+                        borderRadius: 7,
+
+                        borderSkipped: false,
+
+                        maxBarThickness: 42
                     }
                 ]
 
@@ -440,13 +661,59 @@
 
                 maintainAspectRatio: false,
 
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+
                 scales: {
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        },
+
+                        border: {
+                            display: false
+                        },
+
+                        ticks: {
+
+                            color: '#6b7280',
+
+                            font: {
+                                size: 12
+                            }
+
+                        }
+
+                    },
 
                     y: {
 
                         beginAtZero: true,
 
+                        border: {
+                            display: false
+                        },
+
+                        grid: {
+
+                            color: '#e5e7eb',
+
+                            drawTicks: false
+                        },
+
                         ticks: {
+
+                            color: '#6b7280',
+
+                            padding: 8,
+
+                            font: {
+                                size: 11
+                            },
 
                             callback: function(value) {
 
@@ -469,6 +736,18 @@
                     },
 
                     tooltip: {
+
+                        displayColors: false,
+
+                        backgroundColor: '#111827',
+
+                        titleColor: '#ffffff',
+
+                        bodyColor: '#ffffff',
+
+                        padding: 12,
+
+                        cornerRadius: 8,
 
                         callbacks: {
 
@@ -495,4 +774,7 @@
 
 </script>
 
+
+
 @endsection
+
