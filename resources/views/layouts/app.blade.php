@@ -1,6 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -14,75 +17,215 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/app.css') }}"
+    >
+
 </head>
 
 <body>
 
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark pp-navbar">
+
     <div class="container">
 
-        <a class="navbar-brand" href="{{ route('dashboard') }}">
-            PocketPilot
+        {{-- Brand --}}
+        <a
+            class="navbar-brand d-flex align-items-center gap-2"
+            href="{{ route('dashboard') }}"
+        >
+
+            <span class="pp-brand-icon">
+                ₹
+            </span>
+
+            <span class="fw-bold">
+                PocketPilot
+            </span>
+
         </a>
+
 
         @auth
 
-            <div class="d-flex align-items-center gap-3">
+            {{-- Mobile Toggle --}}
+            <button
+                class="navbar-toggler border-0 shadow-none"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#pocketPilotNavbar"
+                aria-controls="pocketPilotNavbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <a
-                    href="{{ route('dashboard') }}"
-                    class="text-white text-decoration-none"
-                >
-                    Dashboard
-                </a>
 
-                <a
-                    href="{{ route('expenses.index') }}"
-                    class="text-white text-decoration-none"
-                >
-                    Expenses
-                </a>
+            <div
+                class="collapse navbar-collapse"
+                id="pocketPilotNavbar"
+            >
 
-                <span class="text-white">
-                    {{ auth()->user()->name }}
-                </span>
+                <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
 
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
+                    {{-- Dashboard --}}
+                    <a
+                        href="{{ route('dashboard') }}"
+                        class="nav-link pp-nav-link
+                        {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+                    >
+                        Dashboard
+                    </a>
 
-                    <button class="btn btn-outline-light btn-sm">
-                        Logout
-                    </button>
-                </form>
+
+                    {{-- Expenses --}}
+                    <a
+                        href="{{ route('expenses.index') }}"
+                        class="nav-link pp-nav-link
+                        {{ request()->routeIs('expenses.*') ? 'active' : '' }}"
+                    >
+                        Expenses
+                    </a>
+
+
+                    {{-- Add Expense --}}
+                    <a
+                        href="{{ route('expenses.create') }}"
+                        class="btn btn-primary pp-add-btn ms-lg-2"
+                    >
+                        + Add Expense
+                    </a>
+
+
+                    {{-- User --}}
+                    <div class="dropdown ms-lg-3 mt-3 mt-lg-0">
+
+                        <button
+                            class="btn pp-user-btn dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+
+                            <span class="pp-avatar">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            </span>
+
+                            <span class="d-none d-sm-inline">
+                                {{ auth()->user()->name }}
+                            </span>
+
+                        </button>
+
+
+                        <ul class="dropdown-menu dropdown-menu-end pp-dropdown">
+
+                            <li>
+                                <span class="dropdown-item-text small text-muted">
+                                    Signed in as
+                                </span>
+                            </li>
+
+                            <li>
+                                <span class="dropdown-item-text fw-semibold">
+                                    {{ auth()->user()->email }}
+                                </span>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <li>
+
+                                <form
+                                    action="{{ route('logout') }}"
+                                    method="POST"
+                                >
+
+                                    @csrf
+
+                                    <button
+                                        type="submit"
+                                        class="dropdown-item text-danger"
+                                    >
+                                        Logout
+                                    </button>
+
+                                </form>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
 
             </div>
 
         @endauth
 
     </div>
+
 </nav>
 
-<main class="container py-4">
 
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+<main class="pp-page">
 
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <div class="container py-4">
 
-    @yield('content')
+        {{-- Success Message --}}
+        @if(session('success'))
+
+            <div class="alert alert-success pp-alert">
+                {{ session('success') }}
+            </div>
+
+        @endif
+
+
+        {{-- Validation Errors --}}
+        @if($errors->any())
+
+            <div class="alert alert-danger pp-alert">
+
+                <div class="fw-semibold mb-1">
+                    Please fix the following:
+                </div>
+
+                <ul class="mb-0 ps-3">
+
+                    @foreach($errors->all() as $error)
+
+                        <li>
+                            {{ $error }}
+                        </li>
+
+                    @endforeach
+
+                </ul>
+
+            </div>
+
+        @endif
+
+
+        @yield('content')
+
+    </div>
 
 </main>
 
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
 </body>
+
 </html>
+
