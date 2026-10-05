@@ -26,7 +26,22 @@
         </a>
 
         @auth
+
             <div class="d-flex align-items-center gap-3">
+
+                <a
+                    href="{{ route('dashboard') }}"
+                    class="text-white text-decoration-none"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="{{ route('expenses.index') }}"
+                    class="text-white text-decoration-none"
+                >
+                    Expenses
+                </a>
 
                 <span class="text-white">
                     {{ auth()->user()->name }}
@@ -41,6 +56,7 @@
                 </form>
 
             </div>
+
         @endauth
 
     </div>
