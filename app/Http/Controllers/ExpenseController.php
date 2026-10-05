@@ -7,16 +7,52 @@ use Illuminate\Http\Request;
 
 class ExpenseController
 {
-    public function index()
+    public function index(Request $request)
     {
-        $expenses = Expense::where(
-            'user_id',
-            auth()->id()
-        )
-        ->orderBy('expense_date', 'desc')
-        ->get();
+        $userId = auth()->id();
 
-        return view('expenses.index', compact('expenses'));
+        $query = Expense::where('user_id', $userId);
+
+        // Search by expense title
+        if ($request->filled('search')) {
+            $search = trim($request->search);
+
+            $query->where(
+                'title',
+                'regex',
+                '/' . preg_quote($search, '/') . '/i'
+            );
+        }
+
+        // Filter by category
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // Filter by date
+        if ($request->filled('date')) {
+            $query->whereDate('expense_date', $request->date);
+        }
+
+        $expenses = $query
+            ->orderBy('expense_date', 'desc')
+            ->get();
+
+        $categories = [
+            'Food',
+            'Transport',
+            'Shopping',
+            'Bills',
+            'Health',
+            'Entertainment',
+            'Education',
+            'Other',
+        ];
+
+        return view('expenses.index', compact(
+            'expenses',
+            'categories'
+        ));
     }
 
     public function create()

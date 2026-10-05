@@ -8,10 +8,12 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
-            <h3 class="fw-bold mb-1">Expenses</h3>
+            <h3 class="fw-bold mb-1">
+                Expenses
+            </h3>
 
             <p class="text-muted mb-0">
-                Manage your expenses.
+                Manage and track your expenses.
             </p>
         </div>
 
@@ -33,160 +35,273 @@
     @endif
 
 
-    {{-- Expenses Card --}}
-    <div class="card border-0 shadow-sm">
+    {{-- Search & Filter --}}
+    <x-ui.card class="mb-4">
 
-        <div class="card-body p-0">
+        <form method="GET"
+              action="{{ route('expenses.index') }}">
 
-            @if($expenses->count())
+            <div class="row g-3 align-items-end">
 
-                <div class="table-responsive">
+                {{-- Search --}}
+                <div class="col-lg-4">
 
-                    <table class="table align-middle mb-0">
+                    <label class="form-label fw-semibold">
+                        Search
+                    </label>
 
-                        <thead class="table-light">
-
-                            <tr>
-                                <th class="px-4">Expense</th>
-                                <th>Category</th>
-                                <th>Date</th>
-                                <th class="text-end">Amount</th>
-                                <th class="text-end px-4">Action</th>
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-                        @foreach($expenses as $expense)
-
-                            <tr>
-
-                                {{-- Expense --}}
-                                <td class="px-4">
-
-                                    <div class="fw-semibold">
-                                        {{ $expense->title }}
-                                    </div>
-
-                                    @if($expense->note)
-
-                                        <small class="text-muted">
-                                            {{ $expense->note }}
-                                        </small>
-
-                                    @endif
-
-                                </td>
-
-
-                                {{-- Category --}}
-                                <td>
-
-                                    <span class="badge bg-light text-dark">
-                                        {{ $expense->category }}
-                                    </span>
-
-                                </td>
-
-
-                                {{-- Date --}}
-                                <td>
-
-                                    {{ $expense->expense_date
-                                        ? $expense->expense_date->format('d M Y')
-                                        : '-' }}
-
-                                </td>
-
-
-                                {{-- Amount --}}
-                                <td class="text-end fw-semibold">
-
-                                    ₹{{ number_format($expense->amount, 2) }}
-
-                                </td>
-
-
-                                {{-- Actions --}}
-                                <td class="text-end px-4">
-
-                                    <div class="d-flex justify-content-end gap-2">
-
-                                        {{-- Edit --}}
-                                        <a
-                                            href="{{ route('expenses.edit', $expense->id) }}"
-                                            class="btn btn-sm btn-outline-primary"
-                                        >
-                                            Edit
-                                        </a>
-
-
-                                        {{-- Delete --}}
-                                        <form
-                                            method="POST"
-                                            action="{{ route('expenses.destroy', $expense->id) }}"
-                                            onsubmit="return confirm('Are you sure you want to delete this expense?');"
-                                        >
-
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <button
-                                                type="submit"
-                                                class="btn btn-sm btn-outline-danger"
-                                            >
-                                                Delete
-                                            </button>
-
-                                        </form>
-
-                                    </div>
-
-                                </td>
-
-                            </tr>
-
-                        @endforeach
-
-                        </tbody>
-
-                    </table>
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ request('search') }}"
+                        class="form-control"
+                        placeholder="Search expense..."
+                    >
 
                 </div>
 
-            @else
 
-                {{-- Empty State --}}
-                <div class="text-center py-5">
+                {{-- Category --}}
+                <div class="col-lg-3">
 
-                    <div class="mb-3" style="font-size: 40px;">
-                        💸
-                    </div>
+                    <label class="form-label fw-semibold">
+                        Category
+                    </label>
 
-                    <h5 class="fw-bold">
-                        No expenses yet
-                    </h5>
+                    <select
+                        name="category"
+                        class="form-select"
+                    >
 
-                    <p class="text-muted mb-3">
-                        Start tracking your expenses today.
-                    </p>
+                        <option value="">
+                            All Categories
+                        </option>
+
+                        @foreach($categories as $category)
+
+                            <option
+                                value="{{ $category }}"
+                                {{ request('category') === $category ? 'selected' : '' }}
+                            >
+                                {{ $category }}
+                            </option>
+
+                        @endforeach
+
+                    </select>
+
+                </div>
+
+
+                {{-- Date --}}
+                <div class="col-lg-3">
+
+                    <label class="form-label fw-semibold">
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="date"
+                        value="{{ request('date') }}"
+                        class="form-control"
+                    >
+
+                </div>
+
+
+                {{-- Buttons --}}
+                <div class="col-lg-2 d-flex gap-2">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary flex-grow-1"
+                    >
+                        Filter
+                    </button>
 
                     <a
-                        href="{{ route('expenses.create') }}"
-                        class="btn btn-primary"
+                        href="{{ route('expenses.index') }}"
+                        class="btn btn-light"
+                        title="Clear filters"
                     >
-                        Add Your First Expense
+                        ↻
                     </a>
 
                 </div>
 
-            @endif
+            </div>
+
+        </form>
+
+    </x-ui.card>
+
+
+    {{-- Expenses Card --}}
+    <x-ui.card>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <div>
+                <h5 class="fw-bold mb-1">
+                    Expense List
+                </h5>
+
+                <p class="text-muted small mb-0">
+                    {{ $expenses->count() }}
+                    {{ $expenses->count() === 1 ? 'expense' : 'expenses' }}
+                    found
+                </p>
+            </div>
 
         </div>
 
-    </div>
+
+        @if($expenses->count())
+
+            <div class="table-responsive">
+
+                <table class="table align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Expense</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th class="text-end">Amount</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    @foreach($expenses as $expense)
+
+                        <tr>
+
+                            {{-- Expense --}}
+                            <td>
+
+                                <div class="fw-semibold">
+                                    {{ $expense->title }}
+                                </div>
+
+                                @if($expense->note)
+
+                                    <small class="text-muted">
+                                        {{ $expense->note }}
+                                    </small>
+
+                                @endif
+
+                            </td>
+
+
+                            {{-- Category --}}
+                            <td>
+
+                                <span class="badge bg-light text-dark">
+                                    {{ $expense->category }}
+                                </span>
+
+                            </td>
+
+
+                            {{-- Date --}}
+                            <td>
+
+                                {{ $expense->expense_date
+                                    ? $expense->expense_date->format('d M Y')
+                                    : '-' }}
+
+                            </td>
+
+
+                            {{-- Amount --}}
+                            <td class="text-end fw-semibold">
+
+                                ₹{{ number_format($expense->amount, 2) }}
+
+                            </td>
+
+
+                            {{-- Actions --}}
+                            <td>
+
+                                <div class="d-flex justify-content-end gap-2">
+
+                                    <a
+                                        href="{{ route('expenses.edit', $expense->id) }}"
+                                        class="btn btn-sm btn-outline-primary"
+                                    >
+                                        Edit
+                                    </a>
+
+
+                                    <form
+                                        method="POST"
+                                        action="{{ route('expenses.destroy', $expense->id) }}"
+                                        onsubmit="return confirm('Are you sure you want to delete this expense?');"
+                                    >
+
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-sm btn-outline-danger"
+                                        >
+                                            Delete
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        @else
+
+            {{-- No Result --}}
+            <div class="text-center py-5">
+
+                <div class="mb-3" style="font-size: 40px;">
+                    🔍
+                </div>
+
+                <h5 class="fw-bold">
+                    No expenses found
+                </h5>
+
+                <p class="text-muted mb-3">
+                    Try changing your search or filter.
+                </p>
+
+                <a
+                    href="{{ route('expenses.index') }}"
+                    class="btn btn-light"
+                >
+                    Clear Filters
+                </a>
+
+            </div>
+
+        @endif
+
+    </x-ui.card>
 
 </div>
 
