@@ -30,11 +30,7 @@ Route::middleware('auth')->group(function () {
         ->name('dashboard');
 
     Route::resource('expenses', ExpenseController::class)
-        ->only([
-            'index',
-            'create',
-            'store',
-        ]);    
+    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);   
 
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');
