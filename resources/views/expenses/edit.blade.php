@@ -4,219 +4,118 @@
 
 <div class="container py-4">
 
-    {{-- Header --}}
-    <div class="mb-4">
-        <h3 class="fw-bold mb-1">Edit Expense</h3>
-        <p class="text-muted mb-0">
-            Update your expense details.
-        </p>
-    </div>
-
     <div class="row justify-content-center">
 
         <div class="col-lg-7">
 
-            <div class="card border-0 shadow-sm">
+            <x-ui.page-header
+                title="Edit Expense"
+                description="Update the details of your expense."
+                :back-url="route('expenses.index')"
+                back-text="Back to Expenses"
+            />
 
-                <div class="card-body p-4">
+            <x-ui.card>
 
-                    <form method="POST"
-                          action="{{ route('expenses.update', $expense->id) }}">
+                <div class="mb-4">
+                    <h5 class="fw-bold mb-1">
+                        Expense Details
+                    </h5>
 
-                        @csrf
-                        @method('PUT')
-
-                        {{-- Expense Title --}}
-                        <div class="mb-3">
-
-                            <label class="form-label fw-semibold">
-                                Expense Title
-                            </label>
-
-                            <input
-                                type="text"
-                                name="title"
-                                class="form-control @error('title') is-invalid @enderror"
-                                value="{{ old('title', $expense->title) }}"
-                                placeholder="e.g. Lunch, Grocery, Bus Ticket"
-                                required
-                            >
-
-                            @error('title')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </div>
-
-
-                        {{-- Amount --}}
-                        <div class="mb-3">
-
-                            <label class="form-label fw-semibold">
-                                Amount
-                            </label>
-
-                            <div class="input-group">
-
-                                <span class="input-group-text">
-                                    ₹
-                                </span>
-
-                                <input
-                                    type="number"
-                                    name="amount"
-                                    class="form-control @error('amount') is-invalid @enderror"
-                                    value="{{ old('amount', $expense->amount) }}"
-                                    step="0.01"
-                                    min="0"
-                                    placeholder="0.00"
-                                    required
-                                >
-
-                            </div>
-
-                            @error('amount')
-                                <div class="text-danger small mt-1">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </div>
-
-
-                        {{-- Date --}}
-                        <div class="mb-3">
-
-                            <label class="form-label fw-semibold">
-                                Date
-                            </label>
-
-                            <input
-                                type="date"
-                                name="expense_date"
-                                class="form-control @error('expense_date') is-invalid @enderror"
-                                value="{{ old(
-                                    'expense_date',
-                                    $expense->expense_date
-                                        ? $expense->expense_date->format('Y-m-d')
-                                        : ''
-                                ) }}"
-                                required
-                            >
-
-                            @error('expense_date')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </div>
-
-
-                        {{-- Category --}}
-                        <div class="mb-3">
-
-                            <label class="form-label fw-semibold">
-                                Category
-                            </label>
-
-                            <select
-                                name="category"
-                                class="form-select @error('category') is-invalid @enderror"
-                                required
-                            >
-
-                                @php
-                                    $categories = [
-                                        'Food',
-                                        'Transport',
-                                        'Shopping',
-                                        'Bills',
-                                        'Health',
-                                        'Entertainment',
-                                        'Education',
-                                        'Other'
-                                    ];
-                                @endphp
-
-                                <option value="">
-                                    Select category
-                                </option>
-
-                                @foreach($categories as $category)
-
-                                    <option
-                                        value="{{ $category }}"
-                                        {{ old('category', $expense->category) === $category ? 'selected' : '' }}
-                                    >
-                                        {{ $category }}
-                                    </option>
-
-                                @endforeach
-
-                            </select>
-
-                            @error('category')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </div>
-
-
-                        {{-- Note --}}
-                        <div class="mb-4">
-
-                            <label class="form-label fw-semibold">
-                                Note
-                                <span class="text-muted fw-normal">
-                                    (Optional)
-                                </span>
-                            </label>
-
-                            <textarea
-                                name="note"
-                                rows="4"
-                                class="form-control @error('note') is-invalid @enderror"
-                                placeholder="Add a note about this expense..."
-                            >{{ old('note', $expense->note) }}</textarea>
-
-                            @error('note')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </div>
-
-
-                        {{-- Buttons --}}
-                        <div class="d-flex justify-content-between">
-
-                            <a
-                                href="{{ route('expenses.index') }}"
-                                class="btn btn-light px-4"
-                            >
-                                Cancel
-                            </a>
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary px-4"
-                            >
-                                Update Expense
-                            </button>
-
-                        </div>
-
-                    </form>
-
+                    <p class="text-muted small mb-0">
+                        Update the information for this expense.
+                    </p>
                 </div>
 
-            </div>
+                <form
+                    method="POST"
+                    action="{{ route('expenses.update', $expense->id) }}"
+                >
+
+                    @csrf
+                    @method('PUT')
+
+
+                    {{-- Expense Title --}}
+                    <x-form.input
+                        name="title"
+                        label="Expense Title"
+                        :value="$expense->title"
+                        placeholder="e.g. Lunch, Grocery, Bus Ticket"
+                        required
+                    />
+
+
+                    {{-- Amount + Category --}}
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <x-form.money
+                                name="amount"
+                                label="Amount"
+                                :value="$expense->amount"
+                                placeholder="0.00"
+                                required
+                            />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <x-form.select
+                                name="category"
+                                label="Category"
+                                :options="[
+                                    'Food',
+                                    'Transport',
+                                    'Shopping',
+                                    'Bills',
+                                    'Health',
+                                    'Entertainment',
+                                    'Education',
+                                    'Other'
+                                ]"
+                                :value="$expense->category"
+                                placeholder="Select category"
+                                required
+                            />
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- Date --}}
+                    <x-form.date
+                        name="expense_date"
+                        label="Date"
+                        :value="$expense->expense_date
+                            ? $expense->expense_date->format('Y-m-d')
+                            : ''"
+                        required
+                    />
+
+
+                    {{-- Note --}}
+                    <x-form.textarea
+                        name="note"
+                        label="Note"
+                        :value="$expense->note"
+                        placeholder="Add a note about this expense..."
+                        :rows="4"
+                    />
+
+
+                    {{-- Actions --}}
+                    <x-form.actions
+                        :cancel-url="route('expenses.index')"
+                        submit-text="Update Expense"
+                    />
+
+                </form>
+
+            </x-ui.card>
 
         </div>
 
