@@ -47,4 +47,53 @@ class ExpenseController
             ->route('expenses.index')
             ->with('success', 'Expense added successfully.');
     }
+
+    public function edit(Expense $expense)
+    {
+        if ($expense->user_id != auth()->id()) {
+            abort(403);
+        }
+
+        return view('expenses.edit', compact('expense'));
+    }
+
+    public function update(Request $request, Expense $expense)
+    {
+        if ($expense->user_id != auth()->id()) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:150',
+            'amount' => 'required|numeric|min:0',
+            'category' => 'required|string|max:50',
+            'expense_date' => 'required|date',
+            'note' => 'nullable|string|max:500',
+        ]);
+
+        $expense->update([
+            'title' => $validated['title'],
+            'amount' => $validated['amount'],
+            'category' => $validated['category'],
+            'expense_date' => $validated['expense_date'],
+            'note' => $validated['note'] ?? null,
+        ]);
+
+        return redirect()
+            ->route('expenses.index')
+            ->with('success', 'Expense updated successfully.');
+    }
+
+    public function destroy(Expense $expense)
+    {
+        if ($expense->user_id != auth()->id()) {
+            abort(403);
+        }
+
+        $expense->delete();
+
+        return redirect()
+            ->route('expenses.index')
+            ->with('success', 'Expense deleted successfully.');
+    }
 }
