@@ -14,7 +14,14 @@
         </p>
     </div>
 
-    <a href="#" class="btn btn-dark">
+    <a
+        href="{{ route('expenses.create') }}"
+        class="btn text-white"
+        style="
+            background: #6366f1;
+            border-radius: 9px;
+        "
+    >
         + Add Expense
     </a>
 
