@@ -6,8 +6,10 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>
         @yield('title', 'PocketPilot')
@@ -60,7 +62,9 @@
                 aria-expanded="false"
                 aria-label="Toggle navigation"
             >
+
                 <span class="navbar-toggler-icon"></span>
+
             </button>
 
 
@@ -69,7 +73,9 @@
                 id="pocketPilotNavbar"
             >
 
-                <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                <div
+                    class="navbar-nav ms-auto align-items-lg-center gap-lg-2"
+                >
 
                     {{-- Dashboard --}}
                     <a
@@ -91,20 +97,20 @@
                     </a>
 
 
-                <a
-                    href="{{ route('reports.index') }}"
-                    class="nav-link pp-nav-link"
-                >
-                    Reports
-                </a>
+                    {{-- Reports --}}
+                    <a
+                        href="{{ route('reports.index') }}"
+                        class="nav-link pp-nav-link
+                        {{ request()->routeIs('reports.*') ? 'active' : '' }}"
+                    >
+                        Reports
+                    </a>
 
 
-
-                    
-
-
-                    {{-- User --}}
-                    <div class="dropdown ms-lg-3 mt-3 mt-lg-0">
+                    {{-- User Menu --}}
+                    <div
+                        class="dropdown ms-lg-3 mt-3 mt-lg-0"
+                    >
 
                         <button
                             class="btn pp-user-btn dropdown-toggle"
@@ -114,7 +120,9 @@
                         >
 
                             <span class="pp-avatar">
-                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                {{ strtoupper(
+                                    substr(auth()->user()->name, 0, 1)
+                                ) }}
                             </span>
 
                             <span class="d-none d-sm-inline">
@@ -124,24 +132,40 @@
                         </button>
 
 
-                        <ul class="dropdown-menu dropdown-menu-end pp-dropdown">
+                        <ul
+                            class="dropdown-menu dropdown-menu-end pp-dropdown"
+                        >
 
+                            {{-- User Information --}}
                             <li>
-                                <span class="dropdown-item-text small text-muted">
+
+                                <span
+                                    class="dropdown-item-text small text-muted"
+                                >
                                     Signed in as
                                 </span>
+
                             </li>
 
                             <li>
-                                <span class="dropdown-item-text fw-semibold">
+
+                                <span
+                                    class="dropdown-item-text fw-semibold"
+                                >
                                     {{ auth()->user()->email }}
                                 </span>
+
                             </li>
+
 
                             <li>
+
                                 <hr class="dropdown-divider">
+
                             </li>
 
+
+                            {{-- Logout --}}
                             <li>
 
                                 <form
@@ -185,7 +209,9 @@
         @if(session('success'))
 
             <div class="alert alert-success pp-alert">
+
                 {{ session('success') }}
+
             </div>
 
         @endif
