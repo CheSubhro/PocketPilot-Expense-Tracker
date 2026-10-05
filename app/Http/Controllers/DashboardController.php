@@ -44,15 +44,68 @@ class DashboardController
         // Expense count
         $expenseCount = $expenses->count();
 
-        // Recent 5 expenses
+        // Recent expenses
         $recentExpenses = $expenses->take(5);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Category Summary
+        |--------------------------------------------------------------------------
+        */
+
+        $categorySummary = $expenses
+            ->groupBy('category')
+            ->map(function ($categoryExpenses) {
+                return $categoryExpenses->sum(function ($expense) {
+                    return (float) $expense->amount;
+                });
+            })
+            ->sortDesc();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Monthly Summary - Last 6 Months
+        |--------------------------------------------------------------------------
+        */
+
+        $monthlySummary = collect();
+
+        for ($i = 5; $i >= 0; $i--) {
+
+            $month = Carbon::now()
+                ->startOfMonth()
+                ->subMonths($i);
+
+            $monthKey = $month->format('Y-m');
+
+            $amount = $expenses
+                ->filter(function ($expense) use ($month) {
+                    if (!$expense->expense_date) {
+                        return false;
+                    }
+
+                    return Carbon::parse($expense->expense_date)
+                        ->isSameMonth($month);
+                })
+                ->sum(function ($expense) {
+                    return (float) $expense->amount;
+                });
+
+            $monthlySummary->push([
+                'label' => $month->format('M Y'),
+                'month' => $monthKey,
+                'amount' => $amount,
+            ]);
+        }
 
         return view('dashboard', compact(
             'totalExpense',
             'thisMonthExpense',
             'todayExpense',
             'expenseCount',
-            'recentExpenses'
+            'recentExpenses',
+            'categorySummary',
+            'monthlySummary'
         ));
     }
 }
