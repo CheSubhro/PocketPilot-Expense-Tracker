@@ -1,91 +1,70 @@
-
 @extends('layouts.app')
-
-@section('title', 'Expenses - PocketPilot')
 
 @section('content')
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="container py-4">
 
-    <div>
+    {{-- Header --}}
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <h2 class="fw-bold mb-1">
-            Expenses
-        </h2>
+        <div>
+            <h3 class="fw-bold mb-1">Expenses</h3>
 
-        <p class="text-secondary mb-0">
-            Keep track of your spending.
-        </p>
+            <p class="text-muted mb-0">
+                Manage your expenses.
+            </p>
+        </div>
+
+        <a href="{{ route('expenses.create') }}"
+           class="btn btn-primary px-4">
+            + Add Expense
+        </a>
 
     </div>
 
-    <a
-        href="{{ route('expenses.create') }}"
-        class="btn text-white"
-        style="
-            background: #6366f1;
-            border-radius: 9px;
-        "
-    >
-        + Add Expense
-    </a>
 
-</div>
+    {{-- Success Message --}}
+    @if(session('success'))
+
+        <div class="alert alert-success border-0 shadow-sm">
+            {{ session('success') }}
+        </div>
+
+    @endif
 
 
-@if(session('success'))
+    {{-- Expenses Card --}}
+    <div class="card border-0 shadow-sm">
 
-    <div class="alert alert-success border-0 rounded-3">
-        {{ session('success') }}
-    </div>
+        <div class="card-body p-0">
 
-@endif
+            @if($expenses->count())
+
+                <div class="table-responsive">
+
+                    <table class="table align-middle mb-0">
+
+                        <thead class="table-light">
+
+                            <tr>
+                                <th class="px-4">Expense</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th class="text-end">Amount</th>
+                                <th class="text-end px-4">Action</th>
+                            </tr>
+
+                        </thead>
 
 
-<div
-    class="card border-0 shadow-sm"
-    style="border-radius: 18px;"
->
-
-    <div class="card-body p-0">
-
-        @if($expenses->count())
-
-            <div class="table-responsive">
-
-                <table class="table align-middle mb-0">
-
-                    <thead class="table-light">
-
-                        <tr>
-
-                            <th class="px-4 py-3">
-                                Expense
-                            </th>
-
-                            <th>
-                                Category
-                            </th>
-
-                            <th>
-                                Date
-                            </th>
-
-                            <th class="text-end px-4">
-                                Amount
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
+                        <tbody>
 
                         @foreach($expenses as $expense)
 
                             <tr>
 
-                                <td class="px-4 py-3">
+                                {{-- Expense --}}
+                                <td class="px-4">
 
                                     <div class="fw-semibold">
                                         {{ $expense->title }}
@@ -93,7 +72,7 @@
 
                                     @if($expense->note)
 
-                                        <small class="text-secondary">
+                                        <small class="text-muted">
                                             {{ $expense->note }}
                                         </small>
 
@@ -102,27 +81,68 @@
                                 </td>
 
 
+                                {{-- Category --}}
                                 <td>
 
-                                    <span class="badge text-bg-light">
+                                    <span class="badge bg-light text-dark">
                                         {{ $expense->category }}
                                     </span>
 
                                 </td>
 
 
+                                {{-- Date --}}
                                 <td>
 
-                                    {{ $expense->expense_date->format('d M Y') }}
+                                    {{ $expense->expense_date
+                                        ? $expense->expense_date->format('d M Y')
+                                        : '-' }}
 
                                 </td>
 
 
+                                {{-- Amount --}}
+                                <td class="text-end fw-semibold">
+
+                                    ₹{{ number_format($expense->amount, 2) }}
+
+                                </td>
+
+
+                                {{-- Actions --}}
                                 <td class="text-end px-4">
 
-                                    <span class="fw-bold">
-                                        ₹{{ number_format($expense->amount, 2) }}
-                                    </span>
+                                    <div class="d-flex justify-content-end gap-2">
+
+                                        {{-- Edit --}}
+                                        <a
+                                            href="{{ route('expenses.edit', $expense->id) }}"
+                                            class="btn btn-sm btn-outline-primary"
+                                        >
+                                            Edit
+                                        </a>
+
+
+                                        {{-- Delete --}}
+                                        <form
+                                            method="POST"
+                                            action="{{ route('expenses.destroy', $expense->id) }}"
+                                            onsubmit="return confirm('Are you sure you want to delete this expense?');"
+                                        >
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                class="btn btn-sm btn-outline-danger"
+                                            >
+                                                Delete
+                                            </button>
+
+                                        </form>
+
+                                    </div>
 
                                 </td>
 
@@ -130,54 +150,44 @@
 
                         @endforeach
 
-                    </tbody>
+                        </tbody>
 
-                </table>
+                    </table>
 
-            </div>
-
-        @else
-
-            <div class="text-center py-5 px-4">
-
-                <div
-                    class="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center"
-                    style="
-                        width: 64px;
-                        height: 64px;
-                        background: #eef2ff;
-                        font-size: 28px;
-                    "
-                >
-                    ₹
                 </div>
 
-                <h5 class="fw-bold">
-                    No expenses yet
-                </h5>
+            @else
 
-                <p class="text-secondary">
-                    Start tracking your spending by adding your first expense.
-                </p>
+                {{-- Empty State --}}
+                <div class="text-center py-5">
 
-                <a
-                    href="{{ route('expenses.create') }}"
-                    class="btn text-white"
-                    style="
-                        background: #6366f1;
-                        border-radius: 9px;
-                    "
-                >
-                    Add First Expense
-                </a>
+                    <div class="mb-3" style="font-size: 40px;">
+                        💸
+                    </div>
 
-            </div>
+                    <h5 class="fw-bold">
+                        No expenses yet
+                    </h5>
 
-        @endif
+                    <p class="text-muted mb-3">
+                        Start tracking your expenses today.
+                    </p>
+
+                    <a
+                        href="{{ route('expenses.create') }}"
+                        class="btn btn-primary"
+                    >
+                        Add Your First Expense
+                    </a>
+
+                </div>
+
+            @endif
+
+        </div>
 
     </div>
 
 </div>
 
 @endsection
-
