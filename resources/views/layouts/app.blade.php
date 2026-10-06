@@ -29,6 +29,10 @@
 
 <body>
 
+    @auth
+        <x-loader.page />
+    @endauth
+
 <nav class="navbar navbar-expand-lg navbar-dark pp-navbar">
 
     <div class="container">
@@ -253,6 +257,166 @@
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 ></script>
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Button Loader
+    |--------------------------------------------------------------------------
+    */
+
+    document.querySelectorAll('form').forEach(function (form) {
+
+        form.addEventListener('submit', function () {
+
+            const button = form.querySelector(
+                '[data-loader-button]'
+            );
+
+            if (!button) {
+                return;
+            }
+
+            if (button.classList.contains('is-loading')) {
+                return;
+            }
+
+            const content =
+                button.querySelector(
+                    '.pp-loader-btn-content'
+                );
+
+            const spinner =
+                button.querySelector(
+                    '.pp-loader-spinner'
+                );
+
+            const loadingText =
+                button.dataset.loadingText ||
+                'Please wait...';
+
+            button.classList.add('is-loading');
+
+            button.disabled = true;
+
+            if (content) {
+
+                content.textContent =
+                    loadingText;
+
+            }
+
+            if (spinner) {
+
+                spinner.classList.remove(
+                    'd-none'
+                );
+
+            }
+
+        });
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Page Navigation Loader
+    |--------------------------------------------------------------------------
+    */
+
+    const pageLoader =
+        document.getElementById(
+            'ppPageLoader'
+        );
+
+    document.querySelectorAll(
+        'a[href]'
+    ).forEach(function (link) {
+
+        link.addEventListener(
+            'click',
+            function (event) {
+
+                if (!pageLoader) {
+                    return;
+                }
+
+                const href =
+                    link.getAttribute('href');
+
+                /*
+                | Ignore:
+                | - empty links
+                | - anchors
+                | - javascript
+                | - external links
+                | - new tabs
+                */
+
+                if (
+                    !href ||
+                    href === '#' ||
+                    href.startsWith('#') ||
+                    href.startsWith('javascript:') ||
+                    link.target === '_blank' ||
+                    link.hasAttribute('download')
+                ) {
+                    return;
+                }
+
+                /*
+                | Don't show loader for Bootstrap controls
+                */
+
+                if (
+                    link.hasAttribute(
+                        'data-bs-toggle'
+                    )
+                ) {
+                    return;
+                }
+
+                pageLoader.classList.add(
+                    'is-visible'
+                );
+
+            }
+        );
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Browser Back / Forward
+    |--------------------------------------------------------------------------
+    */
+
+    window.addEventListener(
+        'pageshow',
+        function () {
+
+            if (!pageLoader) {
+                return;
+            }
+
+            pageLoader.classList.remove(
+                'is-visible'
+            );
+
+        }
+    );
+
+});
+
+</script>
+
+
 
 </body>
 

@@ -295,13 +295,18 @@
                             {{-- Register Button --}}
                             <button
                                 type="submit"
-                                class="btn w-100 py-3 fw-semibold text-white"
-                                style="
-                                    background: #6366f1;
-                                    border-radius: 10px;
-                                "
+                                class="btn pp-loader-btn w-100"
+                                data-loader-button
+                                data-loading-text="Creating account..."
                             >
-                                Create Account
+                                <span class="pp-loader-btn-content">
+                                    Create Account
+                                </span>
+
+                                <span
+                                    class="pp-loader-spinner d-none"
+                                    aria-hidden="true"
+                                ></span>
                             </button>
 
                         </form>

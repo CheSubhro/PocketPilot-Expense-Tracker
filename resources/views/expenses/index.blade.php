@@ -605,9 +605,18 @@
 
                         <button
                             type="submit"
-                            class="btn btn-danger px-4"
+                            class="btn btn-danger px-4 pp-loader-btn"
+                            data-loader-button
+                            data-loading-text="Deleting..."
                         >
-                            Delete Expense
+                            <span class="pp-loader-btn-content">
+                                Delete Expense
+                            </span>
+
+                            <span
+                                class="pp-loader-spinner d-none"
+                                aria-hidden="true"
+                            ></span>
                         </button>
 
                     </form>
