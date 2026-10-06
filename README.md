@@ -1,3 +1,22 @@
+![Categories](screenshot/screencapture-127-0-0-1-8000-dashboard-2026-10-06-10_57_28.png)
+
+![Categories](screenshot/screencapture-127-0-0-1-8000-expenses-2026-10-06-10_57_39.png)
+
+![Categories](screenshot/screencapture-127-0-0-1-8000-expenses-2026-10-06-10_58_29.png)
+
+![Categories](screenshot/screencapture-127-0-0-1-8000-expenses-2026-10-06-10_59_01.png)
+
+![Customers](screenshot/screencapture-127-0-0-1-8000-expenses-6ac38249e16b21875c0e1323-edit-2026-10-06-10_58_15.png)
+
+![Customers](screenshot/screencapture-127-0-0-1-8000-expenses-create-2026-10-06-10_57_52.png)
+
+![Categories](screenshot/screencapture-127-0-0-1-8000-login-2026-10-06-10_56_58.png)
+
+![Customers](screenshot/screencapture-127-0-0-1-8000-register-2026-10-06-10_56_14.png)
+
+![Customers](screenshot/screencapture-127-0-0-1-8000-reports-2026-10-06-10_58_42.png)
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
